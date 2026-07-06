@@ -18,6 +18,8 @@ public class LoginTest extends BaseTest {
     private final int expectedStatusCode;
     private final String expectedMessage;
 
+    private static User validUser;
+
     public LoginTest(User loginUser, int expectedStatusCode, String expectedMessage) {
         this.loginUser = loginUser;
         this.expectedStatusCode = expectedStatusCode;
@@ -26,11 +28,12 @@ public class LoginTest extends BaseTest {
 
     @Parameterized.Parameters(name = "{index}: статус {1}")
     public static Object[][] getLoginData() {
-        User validUser = DataGenerator.generateUser();
+        validUser = DataGenerator.generateUser();
 
         return new Object[][]{
                 {validUser, SC_OK, null},
-                {new User("wrong@yandex.ru", "wrongpass"), SC_UNAUTHORIZED, "email or password are incorrect"}
+                {new User("wrong@yandex.ru", "wrongpass"), SC_UNAUTHORIZED, "email or password are incorrect"},
+                {new User(validUser.getEmail(), "wrongpass"), SC_UNAUTHORIZED, "email or password are incorrect"}
         };
     }
 
@@ -38,6 +41,9 @@ public class LoginTest extends BaseTest {
     public void setUpLogin() {
         if (expectedStatusCode == SC_OK) {
             user = loginUser;
+            userClient.createUser(user);
+        } else if (loginUser.getEmail().equals(validUser.getEmail())) {
+            user = validUser;
             userClient.createUser(user);
         }
     }

@@ -34,6 +34,21 @@ public class UserTest extends BaseTest {
     }
 
     @Test
+    public void createDuplicateUserShouldReturnError() {
+        // Создаём пользователя
+        User user = DataGenerator.generateUser();
+        userClient.createUser(user).then().statusCode(SC_OK);
+
+        // Пытаемся создать такого же пользователя
+        Response response = userClient.createUser(user);
+        response.then()
+                .log().all()
+                .statusCode(SC_FORBIDDEN)
+                .body("success", equalTo(false))
+                .body("message", equalTo("User already exists"));
+    }
+
+    @Test
     public void createUserTest() {
         Response response = userClient.createUser(testUser);
 

@@ -1,7 +1,7 @@
 package com.stellar.burgers.model;
 
 public class Ingredient {
-    private String _id;
+    private String id;
     private String name;
     private String type;
     private float price;
@@ -9,19 +9,19 @@ public class Ingredient {
     public Ingredient() {
     }
 
-    public Ingredient(String _id, String name, String type, float price) {
-        this._id = _id;
+    public Ingredient(String id, String name, String type, float price) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
