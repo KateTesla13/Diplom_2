@@ -32,7 +32,7 @@ public class LoginTest extends BaseTest {
 
         return new Object[][]{
                 {validUser, SC_OK, null},
-                {new User("wrong@yandex.ru", "wrongpass"), SC_UNAUTHORIZED, "email or password are incorrect"},
+                {new User("wrong@yandex.ru", validUser.getPassword()), SC_UNAUTHORIZED, "email or password are incorrect"},
                 {new User(validUser.getEmail(), "wrongpass"), SC_UNAUTHORIZED, "email or password are incorrect"}
         };
     }
